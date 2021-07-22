@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-inline' 'unsafe-eval'">
+    </head>
+    <body>
+        <script>
+         eval('i = true'); // here eval is allowed
+         const blob_payload = `
+        <!doctype html>
+         <script>
+           var i = false;
+           try {
+             eval('i = true');
+           } catch {}
+           opener.postMessage(i ? "eval allowed" : "eval blocked", '*');
+         </scr` + `ipt>
+         `;
+         var blob_url = URL.createObjectURL(
+             new Blob([blob_payload], { type: 'text/html' }));
+         var elm = parent.document.getElementById('bloburl');
+         //parent.parent.location = blob_url; // inherit from initiator
+         elm.innerText = blob_url;
+        </script>
+    </body>
+</html>

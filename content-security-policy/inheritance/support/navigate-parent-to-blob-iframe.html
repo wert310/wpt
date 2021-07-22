@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-inline'">
+  </head>
+  <body>
+      <iframe id="f" src="/content-security-policy/inheritance/support/create-blob-and-write-to-parent.html"></iframe>
+      <div id="bloburl"></div>
+      <script>
+       document.getElementById('f').onload = function () {
+           var elm = document.getElementById('bloburl');
+           parent.location = elm.innerText;
+       }
+      </script>
+  </body>
+</html>
